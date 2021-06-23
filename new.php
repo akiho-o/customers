@@ -8,6 +8,7 @@ $name = '';
 $email = '';
 // エラーチェック用の配列
 $errors = [];
+$errors_required = [];
 
 // リクエストメソッドの判定
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,15 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // バリデーション
-if ($company == '') {
-    $errors[] = '会社名を入力してください';
-}
-if ($name == '') {
-    $errors[] = '氏名を入力してください';
-}
-if ($email == '') {
-    $errors[] = 'メールアドレスを入力してください';
-}
+$errors_required = validateRequired($company, $name, $email);
+
+// エラーメッセージの配列をマージ
+    $errors = array_merge($errors_required);
+
+if (empty($errors)) {
+    insertBt($company, $name, $email);
+    }
 ?>
 
 <!DOCTYPE html>
