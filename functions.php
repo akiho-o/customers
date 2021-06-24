@@ -127,3 +127,32 @@ function deleteBt($id)
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
 }
+
+// タスク更新時のバリデーション
+function updateValidate($id, $company, $name, $email)
+{
+    // 初期化
+    $errors = [];
+
+    if ($company == '') {
+        $errors[] = MSG_NO_COMPANY;
+    }
+    if ($name == '') {
+        $errors[] = MSG_NO_NAME;
+    }
+    if ($email == '') {
+        $errors[] = MSG_NO_EMAIL;
+    }
+
+    if ($company == $id['company']) {
+        $errors[] = MSG_NO_CHANGE;
+    }
+    if ($name == $id['name']) {
+        $errors[] = MSG_NO_CHANGE;
+    }
+    if ($email == $id['email']) {
+        $errors[] = MSG_NO_CHANGE;
+    }
+
+    return $errors;
+}
