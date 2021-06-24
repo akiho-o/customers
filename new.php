@@ -6,6 +6,7 @@ require_once __DIR__ . '/functions.php';
 $company = '';
 $name = '';
 $email = '';
+
 // エラーチェック用の配列
 $errors = [];
 $errors_required = [];
@@ -16,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $company = filter_input(INPUT_POST, 'company');
     $name = filter_input(INPUT_POST, 'name');
     $email = filter_input(INPUT_POST, 'email');
-}
 
 // バリデーション
 $errors_required = validateRequired($company, $name, $email);
@@ -26,7 +26,12 @@ $errors_required = validateRequired($company, $name, $email);
 
 if (empty($errors)) {
     insertBt($company, $name, $email);
+
+    header('Location: index.php');
+    exit;
     }
+}
+
 ?>
 
 <!DOCTYPE html>

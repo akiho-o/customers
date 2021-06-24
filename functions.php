@@ -41,8 +41,6 @@ function validateRequired($company, $name, $email)
     return $errors;
 }
 
-
-
 function insertBt($company, $name, $email)
 {
     $dbh = connectDb();
@@ -67,5 +65,65 @@ function insertBt($company, $name, $email)
     $stmt->bindParam(':company', $company, PDO::PARAM_STR);
     $stmt->bindParam(':name', $name, PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function updateBt($id, $company, $name, $email)
+{
+    $dbh = connectDb();
+
+    $sql = <<<EOM
+    UPDATE
+        customers
+    SET
+        company = :company,
+        name = :name,
+        email = :email
+    WHERE
+        id = :id;
+    EOM;
+
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':company', $company, PDO::PARAM_STR);
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+function findBtById($id)
+{
+    // データベースに接続
+    $dbh = connectDb();
+
+    $sql = <<<EOM
+    SELECT
+        *
+    FROM
+        customers
+    WHERE
+        id = :id
+    EOM;
+
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function deleteBt($id)
+{
+    $dbh = connectDb();
+
+    $sql = <<<EOM
+    DELETE FROM
+        customers
+    WHERE
+        id = :id;
+    EOM;
+
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
 }

@@ -1,6 +1,9 @@
 <?php
 
 require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/config.php';
+
+$id = filter_input(INPUT_GET, 'id');
 
 $dbh = connectDb();
 
@@ -45,8 +48,8 @@ $bts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= h($bt['company']) ?></td>
                             <td><?= h($bt['name']) ?></td>
                             <td><?= h($bt['email']) ?></td>
-                            <td><a href="edit.php" class="btn edit-btn">編集</a></td>
-                            <td><a href="delete.php" class="btn delete-btn">削除</a></td>
+                            <td><a href="edit.php?id=<?= h($bt['id']) ?>" class="btn edit-btn">編集</a></td>
+                            <td><a href="delete.php?id=<?= h($bt['id']) ?>" class="btn delete-btn">削除</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
