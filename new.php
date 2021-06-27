@@ -18,17 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = filter_input(INPUT_POST, 'name');
     $email = filter_input(INPUT_POST, 'email');
 
-// バリデーション
-$errors_required = validateRequired($company, $name, $email);
+    // バリデーション
+    $errors_required = validateRequired($company, $name, $email);
 
-// エラーメッセージの配列をマージ
-$errors = array_merge($errors_required);
+    // エラーメッセージの配列をマージ
+    $errors = array_merge($errors_required);
 
-if (empty($errors)) {
-    insertCustomer($company, $name, $email);
+    if (empty($errors)) {
+        insertCustomer($company, $name, $email);
 
-    header('Location: index.php');
-    exit;
+        header('Location: index.php');
+        exit;
     }
 }
 
