@@ -20,7 +20,7 @@ $stmt = $dbh->prepare($sql);
 
 $stmt->execute();
 
-$bts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -43,13 +43,13 @@ $bts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($bts as $bt) : ?>
+                    <?php foreach ($customers as $customer) : ?>
                         <tr>
-                            <td><?= h($bt['company']) ?></td>
-                            <td><?= h($bt['name']) ?></td>
-                            <td><?= h($bt['email']) ?></td>
-                            <td><a href="edit.php?id=<?= h($bt['id']) ?>" class="btn edit-btn">編集</a></td>
-                            <td><a href="delete.php?id=<?= h($bt['id']) ?>" class="btn delete-btn">削除</a></td>
+                            <td><?= h($customer['company']) ?></td>
+                            <td><?= h($customer['name']) ?></td>
+                            <td><?= h($customer['email']) ?></td>
+                            <td><a href="edit.php?id=<?= h($customer['id']) ?>" class="btn edit-btn">編集</a></td>
+                            <td><a href="delete.php?id=<?= h($customer['id']) ?>" class="btn delete-btn">削除</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

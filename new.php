@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $errors_required = validateRequired($company, $name, $email);
 
 // エラーメッセージの配列をマージ
-    $errors = array_merge($errors_required);
+$errors = array_merge($errors_required);
 
 if (empty($errors)) {
-    insertBt($company, $name, $email);
+    insertCustomer($company, $name, $email);
 
     header('Location: index.php');
     exit;

@@ -41,7 +41,7 @@ function validateRequired($company, $name, $email)
     return $errors;
 }
 
-function insertBt($company, $name, $email)
+function insertCustomer($company, $name, $email)
 {
     $dbh = connectDb();
 
@@ -68,7 +68,7 @@ function insertBt($company, $name, $email)
     $stmt->execute();
 }
 
-function updateBt($id, $company, $name, $email)
+function updateCustomer($id, $company, $name, $email)
 {
     $dbh = connectDb();
 
@@ -91,7 +91,7 @@ function updateBt($id, $company, $name, $email)
     $stmt->execute();
 }
 
-function findBtById($id)
+function findCustomerById($id)
 {
     // データベースに接続
     $dbh = connectDb();
@@ -112,7 +112,7 @@ function findBtById($id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function deleteBt($id)
+function deleteCustomer($id)
 {
     $dbh = connectDb();
 
@@ -128,8 +128,8 @@ function deleteBt($id)
     $stmt->execute();
 }
 
-// タスク更新時のバリデーション
-function updateValidate($id, $company, $name, $email)
+// 編集更新時のバリデーション
+function updateValidate($customer, $company, $name, $email)
 {
     // 初期化
     $errors = [];
@@ -144,15 +144,12 @@ function updateValidate($id, $company, $name, $email)
         $errors[] = MSG_NO_EMAIL;
     }
 
-    if ($company == $id['company']) {
+    if ($company == $customer['company'] && 
+        $name == $customer['name'] &&
+        $email == $customer['email']) {
         $errors[] = MSG_NO_CHANGE;
     }
-    if ($name == $id['name']) {
-        $errors[] = MSG_NO_CHANGE;
-    }
-    if ($email == $id['email']) {
-        $errors[] = MSG_NO_CHANGE;
-    }
+
 
     return $errors;
 }

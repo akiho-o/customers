@@ -4,9 +4,8 @@ require_once __DIR__ . '/functions.php';
 
 // index.php から渡された id を受け取る
 $id = filter_input(INPUT_GET, 'id');
-
 // データの取得
-$bt = findBtById($id);
+$customer = findCustomerById($id);
 
 // 初期化
 $company = '';
@@ -15,7 +14,6 @@ $email = '';
 
 // エラーチェック用の配列
 $errors = [];
-$errors_required = [];
 
 // リクエストメソッドの判定
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,10 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_input(INPUT_POST, 'email');
 
     // バリデーション
-    $errors_required = validateRequired($company, $name, $email);
+    $errors = validateRequired($company, $name, $email);
+    $errors = updateValidate($customer, $company, $name, $email);
 
     if (empty($errors)) {
-        updateBt($id, $company, $name, $email);
+        updateCustomer($id, $company, $name, $email);
 
         header('Location: index.php');
         exit;
@@ -53,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
             <form action="" method="post">
                 <label for="company">会社名</label>
-                <input type="text" id="company" name="company" value="<?= h($bt['company']) ?>">
+                <input type="text" id="company" name="company" value="<?= h($customer['company']) ?>">
                 <label for="name">氏名</label>
-                <input type="text" id="name" name="name" value="<?= h($bt['name']) ?>">
+                <input type="text" id="name" name="name" value="<?= h($customer['name']) ?>">
                 <label for="email">メールアドレス</label>
-                <input type="email" id="email" name="email" value="<?= h($bt['email']) ?>">
+                <input type="email" id="email" name="email" value="<?= h($customer['email']) ?>">
                 <input type="submit" class="btn submit-btn" value="更新">
             </form>
             <a href="index.php" class="btn return-btn">戻る</a>
