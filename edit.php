@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_input(INPUT_POST, 'email');
 
     // バリデーション
-    $errors = validateRequired($company, $name, $email);
     $errors = updateValidate($customer, $company, $name, $email);
 
     if (empty($errors)) {
@@ -32,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: index.php');
         exit;
     }
+    // エラーの際に入力した内容の保持
+    $customer['company'] = $company;
+    $customer['name'] = $name;
+    $customer['email'] = $email;
 }
 ?>
 
